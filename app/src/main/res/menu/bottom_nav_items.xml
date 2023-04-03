@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btm_home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_baseline_home_24"/>
+    <item
+        android:id="@+id/btm_dashboard"
+        android:title="@string/dashboard"
+        android:icon="@drawable/ic_baseline_dashboard_24"/>
+    <item
+        android:id="@+id/btm_guard"
+        android:title="@string/guard_small"
+        android:icon="@drawable/ic_baseline_security_24"/>
+    <item
+        android:id="@+id/btm_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_baseline_profile_24"/>
+</menu>
