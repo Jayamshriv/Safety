@@ -19,28 +19,124 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <ImageView
                 android:id="@+id/imgModel"
-                android:layout_width="94dp"
-                android:layout_height="94dp"
-                android:src="@drawable/ic_baseline_person_24"
+                android:layout_width="101dp"
+                android:layout_height="87dp"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                android:src="@drawable/ic_male_person"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.186" />
 
             <TextView
                 android:id="@+id/nameModel"
-                tools:text="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@id/imgModel"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="@dimen/dimen_16dp"
+                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/grey"
-                android:fontFamily="@font/poppins_regular" />
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/imgModel"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/app_name" />
 
+            <TextView
+                android:id="@+id/addModel"
+                android:layout_width="394dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                android:fontFamily="@font/poppins_extra_light_italic"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imgModel"
+                app:layout_constraintTop_toBottomOf="@+id/nameModel"
+                tools:text="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/batteryModel"
+                android:layout_width="44dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_battery"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgModel" />
+
+            <TextView
+                android:id="@+id/batPerModel"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/green"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/distModel"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/batteryModel"
+                app:layout_constraintTop_toBottomOf="@+id/imgModel"
+                android:text="69%" />
+
+
+            <ImageView
+                android:id="@+id/distModel"
+                android:layout_width="44dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_distance"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/distmModel"
+                app:layout_constraintTop_toBottomOf="@+id/addModel"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/distmModel"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginEnd="184dp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/green"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/wifiImgModel"
+                app:layout_constraintTop_toBottomOf="@+id/addModel"
+               android:text="232M" />
+
+            <ImageView
+                android:id="@+id/wifiImgModel"
+                android:layout_width="43dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_wifi"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wifiTModel"
+                app:layout_constraintTop_toBottomOf="@+id/addModel"
+                app:layout_constraintVertical_bias="1.0" />
+
+
+            <TextView
+                android:id="@+id/wifiTModel"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginEnd="28dp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/green"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/callImgModel"
+                app:layout_constraintTop_toBottomOf="@+id/addModel"
+                android:text="WIFI" />
+
+            <ImageView
+                android:id="@+id/callImgModel"
+                android:layout_width="46dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_call"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addModel"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

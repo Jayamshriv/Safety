@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
         Model("thor"),
         Model("odin"),
         Model("Jane"),
-        Model("Pro")
+        Model("Prof")
     )
 
     val adapter = safetyAdapter(memberList)
