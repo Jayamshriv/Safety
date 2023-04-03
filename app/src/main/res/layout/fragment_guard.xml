@@ -22,7 +22,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvFirst"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="@dimen/dimen_150dp"
         android:layout_margin="16dp"
         android:layout_below="@id/textSrc"
         app:cardBackgroundColor="@color/red"
@@ -80,7 +80,7 @@
         android:id="@+id/cvSec"
         android:layout_below="@id/cvFirst"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="@dimen/dimen_150dp"
         android:layout_margin="16dp"
         app:cardBackgroundColor="@color/green"
         app:cardCornerRadius="16dp"

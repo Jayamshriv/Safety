@@ -6,7 +6,7 @@
     tools:context=".HomeFragment">
 
     <TextView
-        android:id="@+id/textSrc"
+        android:id="@+id/textFam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -17,4 +17,10 @@
         android:textColor="@color/black"
         android:textSize="24sp" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHome"
+        tools:listitem="@layout/model"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textFam"/>
 </RelativeLayout>
