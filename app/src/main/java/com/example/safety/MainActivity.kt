@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                     inflateFragment(HomeFragment.newInstance())
                 }
                 R.id.btm_dashboard -> {
-                    inflateFragment(DashboardFragment.newInstance())
+                    inflateFragment(MapsFragment())
                 }
                 R.id.btm_profile -> {
                     inflateFragment(ProfileFragment.newInstance())

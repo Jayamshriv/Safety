@@ -3,4 +3,8 @@
     <dimen name="dimen_150dp">150dp</dimen>
     <dimen name="dimen_72dp">72dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_14sp">14sp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+
 </resources>
