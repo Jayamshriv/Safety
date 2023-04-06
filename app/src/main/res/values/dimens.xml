@@ -10,5 +10,6 @@
     <dimen name="dimen_32dp">32dp</dimen>
     <dimen name="dimen_10sp">10sp</dimen>
     <dimen name="dimen_180dp">180dp</dimen>
+    <dimen name="dimen_28sp">28sp</dimen>
 
 </resources>
