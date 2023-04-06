@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class inviteAdapter(private val contactList : List<itemsInvite>):RecyclerView.Adapter<inviteAdapter.inviteHolder>() {
+class inviteAdapter(private val contactList : List<ContactModel>):
+    RecyclerView.Adapter<inviteAdapter.inviteHolder>() {
 
-    class inviteHolder(private val itemView: View ) : RecyclerView.ViewHolder(itemView) {
+    class inviteHolder(private val itemView: View ) :
+        RecyclerView.ViewHolder(itemView) {
             val conName = itemView.findViewById<TextView>(R.id.tVInvite)
     }
 

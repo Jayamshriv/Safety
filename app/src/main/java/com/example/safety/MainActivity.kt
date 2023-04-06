@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     private val permissionArray= arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION ,
     android.Manifest.permission.ACCESS_COARSE_LOCATION,
-    android.Manifest.permission.CAMERA)
+    android.Manifest.permission.READ_CONTACTS)
     private val permissionCode = 23
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         askForPerm()
+
         val bottomBar =  findViewById<BottomNavigationView>(R.id.bottom_nav)
 
         bottomBar.setOnItemSelectedListener {
