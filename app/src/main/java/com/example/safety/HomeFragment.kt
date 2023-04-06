@@ -38,7 +38,23 @@ class HomeFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
 
+
+    /*
+    * Invite RecyclerView
+    */
+
+    val contactList = listOf<itemsInvite>(
+        itemsInvite("Iron Man",456788765),
+        itemsInvite("Hulk",456787636),
+        itemsInvite("Captain America james",98765432)
+    )
+    val invAdapter = inviteAdapter(contactList)
+    val inviteRecycler = requireView().findViewById<RecyclerView>(R.id.rvHomeHorz)
+    inviteRecycler.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        inviteRecycler.adapter = invAdapter
+
     }
+
 
 
     companion object {

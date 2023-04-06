@@ -1,20 +1,30 @@
 package com.example.safety
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
+    private val permissionArray= arrayOf(
+        android.Manifest.permission.ACCESS_FINE_LOCATION ,
+    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+    android.Manifest.permission.CAMERA)
+    private val permissionCode = 23
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        askForPerm()
         val bottomBar =  findViewById<BottomNavigationView>(R.id.bottom_nav)
 
         bottomBar.setOnItemSelectedListener {
-
 
             when (it.itemId) {
                 R.id.btm_guard -> {
@@ -37,6 +47,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun askForPerm() {
+        ActivityCompat.requestPermissions(this,permissionArray,permissionCode)
+    }
+
     private fun inflateFragment(newInstance : Fragment) {
 
         val tranc = supportFragmentManager.beginTransaction()
@@ -45,5 +59,34 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(requestCode == permissionCode){
+            if(allPermissonGranted()){
+                // TODO:
+            //openCamera()
+            }
+        }
+    }
+
+    private fun openCamera() {
+        val intent = Intent()
+            intent.action = ACTION_IMAGE_CAPTURE
+        startActivity(intent)
+    }
+
+    private fun allPermissonGranted(): Boolean {
+        for(items in permissionArray){
+            if(ActivityCompat.checkSelfPermission(this,items) != PackageManager.PERMISSION_GRANTED){
+                return false
+            }
+        }
+        return true
+    }
 
 }

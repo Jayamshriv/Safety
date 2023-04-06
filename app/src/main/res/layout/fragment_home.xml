@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
     <RelativeLayout
@@ -40,11 +41,31 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_horz_dots" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textFam"
+            android:layout_above="@+id/cvHomeHorz"
             tools:listitem="@layout/model" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvHomeHorz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/dimen_8dp"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_marginBottom="@dimen/dimen_4dp"
+            app:cardElevation="@dimen/dimen_8dp"
+            android:backgroundTint="#BED8D4"
+            android:layout_alignParentBottom="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHomeHorz"
+            tools:listitem="@layout/item_invite"
+            android:layout_width="match_parent"
+            android:layout_height="168dp" />
+        </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
-</FrameLayout>
+</LinearLayout>
