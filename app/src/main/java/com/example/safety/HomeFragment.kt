@@ -1,17 +1,24 @@
 package com.example.safety
 
-import android.annotation.SuppressLint
+
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
 
+    lateinit var invAdapter: inviteAdapter
+    private val fetchedContacts: ArrayList<ContactModel> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -23,9 +30,9 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         val memberList = listOf<Model>(
@@ -35,26 +42,61 @@ class HomeFragment : Fragment() {
             Model("Jane"),
             Model("Prof")
         )
+        Log.v("FetchContacts","1")
 
         val adapter = safetyAdapter(memberList)
 
+        Log.v("FetchContacts","2")
         val recycler = requireView().findViewById<RecyclerView>(R.id.rvHome)
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
 
-
+        Log.v("FetchContacts","3")
         /*
         * Invite RecyclerView
         */
 
+        Log.v("FetchContacts","4")
+        invAdapter= inviteAdapter(fetchContacts())
+        Log.v("FetchContacts","5")
+        fetchDatabaseContacts()
 
-        val invAdapter = inviteAdapter(fetchContacts())
+        /*
+        * Coroutine
+        */
+        Log.v("FetchContacts","6")
+        CoroutineScope(Dispatchers.IO).launch {
+        Log.v("Fetch Contacts","7")
+            insertDatabaseContacts(fetchContacts())
+            Log.v("FetchContacts","8")
+        }
         val inviteRecycler = requireView().findViewById<RecyclerView>(R.id.rvHomeHorz)
         inviteRecycler.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         inviteRecycler.adapter = invAdapter
 
+        Log.v("FetchContacts","9")
+    }
 
+    private fun fetchDatabaseContacts() {
+        Log.v("FetchContacts","10")
+        val database = SafetyDataBase.getDataBase(requireContext())
+        Log.v("FetchContacts","11")
+        database.contactDao().getAllData().observe(viewLifecycleOwner) {
+            fetchedContacts.clear()
+            fetchedContacts.addAll(it)
+            Log.v("FetchContacts","12")
+            invAdapter.notifyDataSetChanged()
+            Log.v("Fetch Contacts","13")
+        }
+    }
+
+    private suspend fun insertDatabaseContacts(contactList: List<ContactModel>) {
+        Log.v("FetchContacts","14")
+        val database = SafetyDataBase.getDataBase(requireContext())
+
+        database.contactDao().insertAll(contactList)
+        Log.v("FetchContacts","15")
     }
 
 
@@ -102,9 +144,7 @@ class HomeFragment : Fragment() {
 
 
             }
-            if (cursor != null) {
-                cursor.close()
-            }
+            cursor.close()
         }
         return listNumber
     }
