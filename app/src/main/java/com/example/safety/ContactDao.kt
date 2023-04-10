@@ -6,13 +6,13 @@ import androidx.room.*
 @Dao
 interface ContactDao {
 
-    @Query("SELECT * FROM contactModel")
+    @Query("SELECT * FROM ContactModel")
     fun getAllData() : LiveData<List<ContactModel>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(contactInfo: ContactModel)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(contactInfo: List<ContactModel>)
 
 }

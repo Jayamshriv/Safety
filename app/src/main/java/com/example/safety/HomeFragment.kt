@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -65,6 +66,13 @@ class HomeFragment : Fragment() {
         * Coroutine
         */
         Log.v("FetchContacts","6")
+
+
+//        lifecycleScope.launch{
+//            Log.v("Fetch Contacts","7")
+//            insertDatabaseContacts(fetchContacts())
+//            Log.v("FetchContacts","8")
+//        }
         CoroutineScope(Dispatchers.IO).launch {
         Log.v("Fetch Contacts","7")
             insertDatabaseContacts(fetchContacts())
@@ -115,7 +123,9 @@ class HomeFragment : Fragment() {
         if ((cursor != null) && (cursor.count > 0)) {
 
             while (cursor.moveToNext()) {
-                val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+                cursor.getColumnIndex("Name")
+                val id =
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
                 val name =
                     cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                 val num =
@@ -144,7 +154,9 @@ class HomeFragment : Fragment() {
 
 
             }
+            if(cursor != null){
             cursor.close()
+        }
         }
         return listNumber
     }

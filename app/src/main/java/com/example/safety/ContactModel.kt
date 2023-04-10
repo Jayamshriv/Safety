@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class ContactModel(
     val conName: String,
-    @PrimaryKey 
+
+    @PrimaryKey
     val number: String
 )
