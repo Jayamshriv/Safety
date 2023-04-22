@@ -61,11 +61,6 @@
             android:backgroundTint="#BED8D4"
             android:layout_alignParentBottom="true">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvHomeHorz"
-            tools:listitem="@layout/item_invite"
-            android:layout_width="match_parent"
-            android:layout_height="168dp" />
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 </LinearLayout>

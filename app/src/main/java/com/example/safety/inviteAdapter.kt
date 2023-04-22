@@ -5,22 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.safety.databinding.ItemInviteBinding
+import com.google.android.material.button.MaterialButton
 
 class inviteAdapter(private val contactList : List<ContactModel>):
     RecyclerView.Adapter<inviteAdapter.inviteHolder>() {
 
-    class inviteHolder(private val itemView: View ) :
-        RecyclerView.ViewHolder(itemView) {
-            val conName = itemView.findViewById<TextView>(R.id.tVInvite)
-    }
+    inner class inviteHolder(var binding: ItemInviteBinding ) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): inviteHolder {
-        return inviteHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_invite,parent,false))
+        val binding = ItemInviteBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return inviteHolder(binding)
     }
 
     override fun onBindViewHolder(holder: inviteHolder, position: Int) {
         val name = contactList[position]
-        holder.conName.text = name.conName
+        holder.binding.tVInvite.text = name.conName
+        holder.binding.inviteBtn.setOnClickListener{
+            sendInvite()
+        }
+    }
+
+    private fun sendInvite(){
+
     }
 
     override fun getItemCount(): Int {

@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.safety.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding : ActivityMainBinding
     private val permissionArray= arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION ,
     android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -19,13 +21,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         askForPerm()
-
-        val bottomBar =  findViewById<BottomNavigationView>(R.id.bottom_nav)
-
-        bottomBar.setOnItemSelectedListener {
+        binding.bottomNav.setOnItemSelectedListener {
 
             when (it.itemId) {
                 R.id.btm_guard -> {
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        bottomBar.selectedItemId = R.id.btm_home
+        binding.bottomNav.selectedItemId = R.id.btm_home
 
     }
 

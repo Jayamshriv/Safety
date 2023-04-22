@@ -6,23 +6,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.safety.databinding.ModelBinding
 
 class safetyAdapter(private val memberList: List<Model>) : RecyclerView.Adapter<safetyAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val itemView: View) : RecyclerView.ViewHolder(itemView){
-        val name = itemView.findViewById<TextView>(R.id.nameModel)
-        val img = itemView.findViewById<ImageView>(R.id.imgModel)
-    }
+    inner class ViewHolder(var binding: ModelBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val item = inflater.inflate(R.layout.model,parent,false)
-        return ViewHolder(item)
+        val binding = ModelBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val mem = memberList[position]
-        holder.name.text = mem.name
+        holder.binding.nameModel.text = mem.name
     }
 
     override fun getItemCount(): Int {
