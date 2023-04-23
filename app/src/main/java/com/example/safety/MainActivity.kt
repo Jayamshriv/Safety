@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
     private val permissionArray= arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION ,
     android.Manifest.permission.ACCESS_COARSE_LOCATION,
-    android.Manifest.permission.READ_CONTACTS)
+    android.Manifest.permission.READ_CONTACTS,
+    android.Manifest.permission.SEND_SMS)
     private val permissionCode = 23
 
     override fun onCreate(savedInstanceState: Bundle?) {

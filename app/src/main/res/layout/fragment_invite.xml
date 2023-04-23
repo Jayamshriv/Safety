@@ -8,15 +8,33 @@
     android:layout_height="match_parent"
     tools:context=".InviteFragment">
 
-    <SearchView
-        android:id="@+id/searchView"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search contacts..."/>
+        android:layout_margin="@dimen/dimen_8dp"
+        app:cardCornerRadius="@dimen/dimen_16dp"
+        app:cardElevation="@dimen/dimen_8dp">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search contacts..." />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_4dp"
+        android:elevation="@dimen/dimen_4dp"
+        app:cardCornerRadius="@dimen/dimen_8dp">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHomeHorz"
         tools:listitem="@layout/item_invite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

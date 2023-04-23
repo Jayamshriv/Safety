@@ -9,6 +9,9 @@ interface ContactDao {
     @Query("SELECT * FROM ContactModel")
     fun getAllData() : LiveData<List<ContactModel>>
 
+    @Query("SELECT * FROM ContactModel where conName = :name")
+    fun getNumber(name : String): ContactModel
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(contactInfo: ContactModel)
 

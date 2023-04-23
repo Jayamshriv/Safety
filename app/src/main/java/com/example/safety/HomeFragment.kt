@@ -18,8 +18,6 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
-//    lateinit var invAdapter: inviteAdapter
-//    private val fetchedContacts: ArrayList<ContactModel> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

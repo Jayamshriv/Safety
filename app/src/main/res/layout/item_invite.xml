@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_8dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvInvite"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_150dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/dimen_16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,51 +17,58 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/inviteImage"
-                android:layout_width="70dp"
-                android:layout_height="80dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_male_person"
-                app:layout_constraintBottom_toTopOf="@+id/tVInvite"
-                app:layout_constraintEnd_toEndOf="parent"
+            <FrameLayout
+                android:id="@+id/initials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.492"/>
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_64dp"
+                    android:layout_height="@dimen/dimen_64dp"
+                    android:layout_margin="@dimen/dimen_4dp"
+                    android:background="@drawable/circle_image" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="32sp"
+                    android:text="AA" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tVInvite"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/dimen_180dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
-                android:gravity="center_horizontal"
-                android:text="@string/app_name"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_semi_bold"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:padding="@dimen/dimen_8dp"
                 android:textSize="@dimen/dimen_14sp"
-                app:layout_constraintBottom_toTopOf="@+id/inviteBtn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/inviteBtn"
+                app:layout_constraintStart_toEndOf="@id/initials"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/invite" />
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/inviteBtn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_32dp"
-                android:maxHeight="@dimen/dimen_32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_8dp"
-                android:layout_marginBottom="@dimen/dimen_8dp"
-                android:background="@drawable/round_corners"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:gravity="center"
+                android:backgroundTint="@color/light_purple"
+                android:padding="@dimen/dimen_10dp"
                 android:text="@string/invite"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimen_10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

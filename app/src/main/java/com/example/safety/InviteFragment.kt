@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.safety.databinding.FragmentInviteBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +37,7 @@ class InviteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.v("ProfileFragment :"," 1")
-        inviteAdapter= inviteAdapter(fetchContacts())
+        inviteAdapter= inviteAdapter(requireContext(),fetchContacts())
 
         fetchContactsFromDatabase()
         Log.v("ProfileFragment :"," 2")
@@ -48,7 +48,7 @@ class InviteFragment : Fragment() {
             insertContactsInDatabase(fetchContacts())
             Log.v("ProfileFragment :"," 4")
         }
-        binding.rvHomeHorz.layoutManager = GridLayoutManager(requireContext(),3)
+        binding.rvHomeHorz.layoutManager = LinearLayoutManager(requireContext())
         binding.rvHomeHorz.adapter = inviteAdapter
 
         }
