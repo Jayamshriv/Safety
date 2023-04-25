@@ -2,7 +2,6 @@ package com.example.safety
 
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

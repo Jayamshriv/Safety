@@ -15,14 +15,13 @@ import kotlinx.coroutines.launch
 
 class InviteFragment : Fragment() {
 
-    private lateinit var contactsFetched : ArrayList<ContactModel>
+    private var contactsFetched : ArrayList<ContactModel> = ArrayList()
     private lateinit var inviteAdapter: inviteAdapter
-    lateinit var binding: FragmentInviteBinding
+    private lateinit var binding: FragmentInviteBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -33,12 +32,14 @@ class InviteFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         Log.v("ProfileFragment :"," 1")
         inviteAdapter= inviteAdapter(requireContext(),fetchContacts())
-
         fetchContactsFromDatabase()
         Log.v("ProfileFragment :"," 2")
 
@@ -53,14 +54,22 @@ class InviteFragment : Fragment() {
 
         }
 
+    private fun showProgressbar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
     private fun fetchContactsFromDatabase() {
         val dataBase= SafetyDataBase.getDataBase(requireContext())
-        contactsFetched = ArrayList()
         dataBase.contactDao().getAllData().observe(viewLifecycleOwner){
             contactsFetched.clear()
             contactsFetched.addAll(it)
             inviteAdapter.notifyDataSetChanged()
         }
+        hideProgressbar()
+    }
+
+    private fun hideProgressbar() {
+        binding.progressBar.visibility = View.GONE
     }
 
     private suspend fun insertContactsInDatabase(Contacts: java.util.ArrayList<ContactModel>) {
@@ -81,6 +90,8 @@ class InviteFragment : Fragment() {
         )
 
         if ((cursor != null) && (cursor.count > 0)) {
+
+            showProgressbar()
 
             while (cursor.moveToNext()) {
                 cursor.getColumnIndex("Name")

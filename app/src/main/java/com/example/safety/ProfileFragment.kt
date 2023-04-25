@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import com.example.safety.databinding.FragmentInviteBinding
 import com.example.safety.databinding.FragmentProfileBinding
+import com.example.safety.databinding.ItemViewShimmerBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
