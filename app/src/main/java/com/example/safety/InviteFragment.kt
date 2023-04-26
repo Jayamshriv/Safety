@@ -44,7 +44,7 @@ class InviteFragment : Fragment() {
         Log.v("ProfileFragment :"," 2")
 
 
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch {
             Log.v("ProfileFragment :"," 3")
             insertContactsInDatabase(fetchContacts())
             Log.v("ProfileFragment :"," 4")
