@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.safety.databinding.FragmentInviteBinding
 import kotlinx.coroutines.CoroutineScope
@@ -33,25 +32,25 @@ class InviteFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         Log.v("ProfileFragment :"," 1")
         inviteAdapter= inviteAdapter(requireContext(),fetchContacts())
-//        showProgressbar()
+        fetchContactsFromDatabase()
         Log.v("ProfileFragment :"," 2")
 
+
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.v("ProfileFragment :"," 3")
+            insertContactsInDatabase(fetchContacts())
+            Log.v("ProfileFragment :"," 4")
+        }
         binding.rvHomeHorz.layoutManager = LinearLayoutManager(requireContext())
         binding.rvHomeHorz.adapter = inviteAdapter
-
-        lifecycleScope.launch {
-            Log.v("ProfileFragment :", " 3")
-            fetchContactsFromDatabase()
-            Log.v("ProfileFragment :"," 4")
-            insertContactsInDatabase(fetchContacts())
-            Log.v("ProfileFragment :"," 6")
-
-        }
 
         }
 
@@ -59,28 +58,24 @@ class InviteFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    private fun hideProgressbar() {
-        binding.progressBar.visibility = View.GONE
-    }
-
     private fun fetchContactsFromDatabase() {
-//        showProgressbar()
         val dataBase= SafetyDataBase.getDataBase(requireContext())
         dataBase.contactDao().getAllData().observe(viewLifecycleOwner){
             contactsFetched.clear()
             contactsFetched.addAll(it)
             inviteAdapter.notifyDataSetChanged()
         }
-//        hideProgressbar()
+        hideProgressbar()
+    }
+
+    private fun hideProgressbar() {
+        binding.progressBar.visibility = View.GONE
     }
 
     private suspend fun insertContactsInDatabase(Contacts: java.util.ArrayList<ContactModel>) {
         val dataBase = SafetyDataBase.getDataBase(requireContext())
         dataBase.contactDao().insertAll(Contacts)
-//        hideProgressbar()
-        Log.v("ProfileFragment :"," 5")
     }
-
 
     private fun fetchContacts(): ArrayList<ContactModel> {
 
@@ -96,7 +91,7 @@ class InviteFragment : Fragment() {
 
         if ((cursor != null) && (cursor.count > 0)) {
 
-//            showProgressbar()
+            showProgressbar()
 
             while (cursor.moveToNext()) {
                 cursor.getColumnIndex("Name")
