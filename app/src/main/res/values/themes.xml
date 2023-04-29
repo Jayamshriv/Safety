@@ -20,6 +20,6 @@
         <item name="backgroundColor">@color/white</item>
         <item name="colorPrimary">@color/light_purple</item>
         <item name="colorPrimaryVariant">@color/grey</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/grey</item>
     </style>
 </resources>

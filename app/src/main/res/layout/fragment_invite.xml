@@ -1,93 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".InviteFragment">
+    tools:context=".InviteFragment"
+    android:layout_height="match_parent">
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/searchCardView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_8dp"
-        app:cardCornerRadius="@dimen/dimen_16dp"
-        app:cardElevation="@dimen/dimen_8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/searchCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:iconifiedByDefault="false"
-            app:queryHint="Search contacts..." />
+            android:layout_margin="@dimen/dimen_8dp"
+            app:cardCornerRadius="@dimen/dimen_16dp"
+            app:cardElevation="@dimen/dimen_8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.card.MaterialCardView>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search contacts..." />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        </com.google.android.material.card.MaterialCardView>
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/dimen_4dp"
-        android:elevation="@dimen/dimen_4dp"
-        app:cardCornerRadius="@dimen/dimen_8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchCardView">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvHomeHorz"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_invite" />
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/dimen_4dp"
+            android:elevation="@dimen/dimen_4dp"
+            app:cardCornerRadius="@dimen/dimen_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchCardView">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHomeHorz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_invite" />
 
-<!--<com.facebook.shimmer.ShimmerFrameLayout-->
-<!--android:id="@+id/shimmerContainer"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--app:layout_constraintEnd_toEndOf="parent"-->
-<!--app:layout_constraintStart_toStartOf="parent"-->
-<!--app:layout_constraintTop_toTopOf="parent">-->
 
-<!--<LinearLayout-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:orientation="vertical">-->
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content" />
+</FrameLayout><!--<com.facebook.shimmer.ShimmerFrameLayout-->
+    <!--android:id="@+id/shimmerContainer"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent">-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--<LinearLayout-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:orientation="vertical">-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--    <include layout="@layout/item_view_shimmer" />-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--    <include layout="@layout/item_view_shimmer" />-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--    <include layout="@layout/item_view_shimmer" />-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--    <include layout="@layout/item_view_shimmer" />-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--    <include layout="@layout/item_view_shimmer" />-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--    <include layout="@layout/item_view_shimmer" />-->
 
-<!--    <include layout="@layout/item_view_shimmer" />-->
-<!--</LinearLayout>-->
-<!--</com.facebook.shimmer.ShimmerFrameLayout>-->
+    <!--    <include layout="@layout/item_view_shimmer" />-->
+
+    <!--    <include layout="@layout/item_view_shimmer" />-->
+
+    <!--    <include layout="@layout/item_view_shimmer" />-->
+    <!--</LinearLayout>-->
+    <!--</com.facebook.shimmer.ShimmerFrameLayout>-->

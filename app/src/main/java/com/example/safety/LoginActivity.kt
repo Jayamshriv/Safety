@@ -200,7 +200,3 @@ class LoginActivity : AppCompatActivity() {
 //                Log.d("Error :","Google Auth failed",e)
 //            }
 //        }
-
-//
-
-
