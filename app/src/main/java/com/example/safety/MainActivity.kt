@@ -1,23 +1,40 @@
 package com.example.safety
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
+import android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.safety.databinding.ActivityMainBinding
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var binding : ActivityMainBinding
     private val permissionArray= arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION ,
     android.Manifest.permission.ACCESS_COARSE_LOCATION,
     android.Manifest.permission.READ_CONTACTS,
     android.Manifest.permission.SEND_SMS)
+
     private val permissionCode = 23
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +42,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        askForPerm()
+        if(isAllPermissonGranted()) {
+            if(isLocationEnabled(this)){
+                setUpLocationListener()
+            }else{
+                showGPSNotEnabledDialog(this)
+            }
+        }
+        else{
+            askForPerm()
+
+        }
         binding.bottomNav.setOnItemSelectedListener {
 
             when (it.itemId) {
@@ -47,6 +74,59 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNav.selectedItemId = R.id.btm_home
 
+
+
+    }
+
+    private fun setUpLocationListener() {
+        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    super.onLocationResult(locationResult)
+                    for (location in locationResult.locations) {
+                        Log.d("Location Latitude","latitude ${location.latitude}")
+                        Log.d("Location Longitude","Longitude ${location.longitude}")
+
+                        val userUid = auth.currentUser?.uid
+                        val db = FirebaseFirestore.getInstance()
+
+                        val locationData = mutableMapOf<String,Any>(
+                            "latitude" to location.latitude.toString(),
+                            "longitude" to location.longitude.toString()
+                        )
+                        db.collection("User Data")
+                            .document(userUid!!)
+                            .update(locationData)
+                            .addOnSuccessListener {
+                                Toast.makeText(
+                                    baseContext,
+                                    "loaction added",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                            .addOnFailureListener {
+                                Log.d("TAG", "dataStoring: Failure")
+                                Toast.makeText(
+                                    baseContext,
+                                    "loaction added failed.",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+
+
+
+                    }
+                    // Few more things we can do here:
+                    // For example: Update the location of user on server
+                }
+            },
+            Looper.myLooper()
+        )
     }
 
     private fun askForPerm() {
@@ -69,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if(requestCode == permissionCode){
-            if(allPermissonGranted()){
+            if(isAllPermissonGranted()){
                 // TODO:
             //openCamera()
             }
@@ -82,13 +162,33 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun allPermissonGranted(): Boolean {
+    private fun isAllPermissonGranted(): Boolean {
         for(items in permissionArray){
-            if(ActivityCompat.checkSelfPermission(this,items) != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.checkSelfPermission(this,
+                    items
+                ) != PackageManager.PERMISSION_GRANTED){
                 return false
             }
         }
         return true
+    }
+
+    fun isLocationEnabled(context: Context): Boolean {
+        val locationManager: LocationManager =
+            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    fun showGPSNotEnabledDialog(context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle(context.getString(R.string.enable_gps))
+            .setMessage(context.getString(R.string.required_for_this_app))
+            .setCancelable(false)
+            .setPositiveButton(context.getString(R.string.enable_now)) { _, _ ->
+                context.startActivity(Intent(ACTION_LOCATION_SOURCE_SETTINGS))
+            }
+            .show()
     }
 
 }

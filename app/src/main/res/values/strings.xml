@@ -22,5 +22,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="welcome_login">Welcome</string>
+    <string name="enable_gps">Enable Gps</string>
+    <string name="required_for_this_app">Required for Safety app</string>
+    <string name="enable_now">Enable Now</string>
 
 </resources>

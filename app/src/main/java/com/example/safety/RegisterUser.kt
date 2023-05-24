@@ -41,7 +41,7 @@ class RegisterUser : AppCompatActivity() {
                     .addOnCompleteListener(this) {
                         if (it.isSuccessful) {
                             val userUid = auth.currentUser?.uid
-                            val userInfo = users(firstname, lastname, email, password)
+                            val userInfo = users(firstname, lastname, email, password,"","")
                             val db = FirebaseFirestore.getInstance()
                             db.collection("User Data")
                                 .document(userUid!!)
