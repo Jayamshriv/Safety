@@ -1,5 +1,7 @@
 package com.example.safety
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -83,24 +85,43 @@ class MainActivity : AppCompatActivity() {
         val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            return
+        }
+
         fusedLocationProviderClient.requestLocationUpdates(
             locationRequest,
             object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
                     super.onLocationResult(locationResult)
+
                     for (location in locationResult.locations) {
                         Log.d("Location Latitude","latitude ${location.latitude}")
                         Log.d("Location Longitude","Longitude ${location.longitude}")
 
-                        val userUid = auth.currentUser?.uid
+                        val userUid = FirebaseAuth.getInstance().currentUser
+                        val mail = userUid?.email.toString()
+
+                        val latitude = location.latitude.toString()
+                        val longitude = location.longitude.toString()
+
                         val db = FirebaseFirestore.getInstance()
 
                         val locationData = mutableMapOf<String,Any>(
-                            "latitude" to location.latitude.toString(),
-                            "longitude" to location.longitude.toString()
+                            "latitude" to latitude,
+                            "longitude" to longitude
                         )
+
                         db.collection("User Data")
-                            .document(userUid!!)
+                            .document(mail)
                             .update(locationData)
                             .addOnSuccessListener {
                                 Toast.makeText(
@@ -117,9 +138,6 @@ class MainActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT,
                                 ).show()
                             }
-
-
-
                     }
                     // Few more things we can do here:
                     // For example: Update the location of user on server
@@ -164,7 +182,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun isAllPermissonGranted(): Boolean {
         for(items in permissionArray){
-            if(ActivityCompat.checkSelfPermission(this,
+            if(ActivityCompat.checkSelfPermission(
+                    this,
                     items
                 ) != PackageManager.PERMISSION_GRANTED){
                 return false
