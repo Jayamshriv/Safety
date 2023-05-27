@@ -12,6 +12,10 @@
 #   public *;
 #}
 -keep class com.example.safety.**{*;}
+-keepclassmembers class com.example.safety.Model {
+    public <init>();
+    public <init>(...);
+}
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable

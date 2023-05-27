@@ -40,11 +40,13 @@ class RegisterUser : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) {
                         if (it.isSuccessful) {
-                            val userUid = auth.currentUser?.uid
-                            val userInfo = users(firstname, lastname, email, password,"","")
+
+                            val documentPath = "$email"
+                            val userInfo = users(firstname, lastname, email, password)
+
                             val db = FirebaseFirestore.getInstance()
                             db.collection("User Data")
-                                .document(userUid!!)
+                                .document(documentPath)
                                 .set(userInfo)
                                 .addOnSuccessListener {
 
@@ -70,6 +72,7 @@ class RegisterUser : AppCompatActivity() {
                                 }
                         }
                         else{
+
                             Log.d(TAG, "createUserWithEmail:Failure", it.exception)
                             Toast.makeText(
                                 baseContext,

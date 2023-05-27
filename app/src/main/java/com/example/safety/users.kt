@@ -5,7 +5,7 @@ data class users(
     var lastName: String = "",
     var email: String = "",
     var password: String = "",
-    var latitude:  String = "",
-    var longitude :  String = ""
+    var lat : String="",
+    var long : String=""
 )
 

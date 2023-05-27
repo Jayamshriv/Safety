@@ -1,7 +1,6 @@
 package com.example.safety
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -82,15 +81,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpLocationListener() {
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
+        val locationRequest = LocationRequest.create().apply {
+            interval = 2000 // Set the interval to 2000 milliseconds (2 seconds)
+            fastestInterval = 2000 // Set the fastest interval to 2000 milliseconds (2 seconds)
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+//        val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
+//            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
         if (ActivityCompat.checkSelfPermission(
                 this,
-                ACCESS_FINE_LOCATION
+                android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this,
-                ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
 
@@ -104,26 +108,26 @@ class MainActivity : AppCompatActivity() {
                     super.onLocationResult(locationResult)
 
                     for (location in locationResult.locations) {
-                        Log.d("Location Latitude","latitude ${location.latitude}")
-                        Log.d("Location Longitude","Longitude ${location.longitude}")
+                        Log.d("LocationData","latitude ${location.latitude}")
+                        Log.d("LocationData","Longitude ${location.longitude}")
 
-                        val userUid = FirebaseAuth.getInstance().currentUser
-                        val mail = userUid?.email.toString()
+                        val currentUser = FirebaseAuth.getInstance().currentUser
+                        val mail = currentUser?.email.toString()
 
-                        val latitude = location.latitude.toString()
-                        val longitude = location.longitude.toString()
+                        val db = Firebase.firestore
 
-                        val db = FirebaseFirestore.getInstance()
-
-                        val locationData = mutableMapOf<String,Any>(
-                            "latitude" to latitude,
-                            "longitude" to longitude
+                        val locationData = hashMapOf<String,Any>(
+                            "lat" to location.latitude.toString(),
+                            "long" to  location.longitude.toString()
                         )
+
+                        FirebaseFirestore.setLoggingEnabled(true)
 
                         db.collection("User Data")
                             .document(mail)
                             .update(locationData)
                             .addOnSuccessListener {
+//                                Log.d("location",it)
                                 Toast.makeText(
                                     baseContext,
                                     "loaction added",
@@ -131,6 +135,7 @@ class MainActivity : AppCompatActivity() {
                                 ).show()
                             }
                             .addOnFailureListener {
+                                FirebaseFirestore.setLoggingEnabled(true)
                                 Log.d("TAG", "dataStoring: Failure")
                                 Toast.makeText(
                                     baseContext,
