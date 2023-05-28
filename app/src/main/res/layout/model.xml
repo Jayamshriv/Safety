@@ -84,33 +84,18 @@
                     android:id="@+id/batPerModel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_4dp"
                     android:fontFamily="@font/poppins_semi_bold"
                     android:gravity="center_vertical"
-                    android:text="69%"
+                    tools:text="69%"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:background="@drawable/round_rightcorner"
                     android:textSize="@dimen/dimen_14sp" />
 
-                <ImageView
-                    android:id="@+id/distModel"
-                    android:layout_width="44dp"
-                    android:layout_weight="1"
-                    android:layout_height="28dp"
-                    android:src="@drawable/ic_distance" />
 
-                <TextView
-                    android:id="@+id/distmModel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:fontFamily="@font/poppins_semi_bold"
-                    android:text="232M"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/dimen_14sp" />
 
                 <ImageView
                     android:id="@+id/wifiImgModel"
@@ -124,7 +109,7 @@
                     app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
-                    android:id="@+id/wifiTModel"
+                    android:id="@+id/connectionTvModel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

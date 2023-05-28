@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.safety.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.net.ConnectException
 
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
+    lateinit var mapFragment : UserLocationFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -32,7 +34,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val db = Firebase.firestore
         Log.v("FetchContacts", "1")
 
@@ -48,7 +49,14 @@ class HomeFragment : Fragment() {
                 for (usersInfo in result.documents) {
                     val user = usersInfo.toObject(users::class.java)
                     if (!result.isEmpty) {
-                        val model = Model(user?.firstName.orEmpty())
+                        val name = user?.fullName.orEmpty()
+                        val latitude = user?.lat.orEmpty()
+                        val longitude = user?.long.orEmpty()
+                        val phoneNumber = user?.phoneNumber.orEmpty()
+                        val batPer = user!!.batPer
+                        val connectionInfo = user.connectionInfo.orEmpty()
+
+                        val model = Model(name,phoneNumber,batPer,latitude,longitude,connectionInfo)
                         usersList.add(model)
                     }
                     val adapter = safetyAdapter(usersList)
@@ -65,11 +73,7 @@ class HomeFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
-
-
-
-
+        
     }
 
 

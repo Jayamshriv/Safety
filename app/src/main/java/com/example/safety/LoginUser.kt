@@ -58,13 +58,11 @@ class LoginUser : AppCompatActivity() {
                                     val user = document.toObject<users>()
 
                                     if (user != null) {
-                                        val firstname = user.firstName
-                                        val lastname = user.lastName
-                                        val email = user.email
+                                        val fullName = user.fullName
 
                                         Toast.makeText(
                                             this,
-                                            "Welcome $firstname $lastname ",
+                                            "Welcome $fullName ",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }

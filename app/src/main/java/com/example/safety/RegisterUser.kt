@@ -27,14 +27,14 @@ class RegisterUser : AppCompatActivity() {
             val intent = Intent(this, LoginUser::class.java)
             startActivity(intent)
         }
-
+        
         binding.RegisterBtn.setOnClickListener {
-            val firstname = binding.tilfirstName.editText?.text.toString()
-            val lastname = binding.tillastName.editText?.text.toString()
+            val fullname = binding.tilName.editText?.text.toString()
+            val phoneNumber = binding.tilPhoneNumber.editText?.text.toString()
             val email = binding.tilemail.editText?.text.toString()
             val password = binding.tilpassword.editText?.text.toString()
 
-            if (firstname.isEmpty() || lastname.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (fullname.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Enter all the info", Toast.LENGTH_SHORT).show()
             } else {
                 auth.createUserWithEmailAndPassword(email, password)
@@ -42,9 +42,10 @@ class RegisterUser : AppCompatActivity() {
                         if (it.isSuccessful) {
 
                             val documentPath = "$email"
-                            val userInfo = users(firstname, lastname, email, password)
+                            val userInfo = users(fullname, phoneNumber, email, password)
 
                             val db = FirebaseFirestore.getInstance()
+
                             db.collection("User Data")
                                 .document(documentPath)
                                 .set(userInfo)

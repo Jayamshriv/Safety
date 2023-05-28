@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
@@ -29,12 +32,15 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var binding : ActivityMainBinding
-    private val permissionArray= arrayOf(
-        android.Manifest.permission.ACCESS_FINE_LOCATION ,
-    android.Manifest.permission.ACCESS_COARSE_LOCATION,
-    android.Manifest.permission.READ_CONTACTS,
-    android.Manifest.permission.SEND_SMS)
+    private lateinit var binding: ActivityMainBinding
+    private val permissionArray = arrayOf(
+        android.Manifest.permission.ACCESS_FINE_LOCATION,
+        android.Manifest.permission.ACCESS_COARSE_LOCATION,
+        android.Manifest.permission.READ_CONTACTS,
+        android.Manifest.permission.ACCESS_NETWORK_STATE,
+        android.Manifest.permission.CALL_PHONE,
+        android.Manifest.permission.SEND_SMS
+    )
 
     private val permissionCode = 23
 
@@ -43,14 +49,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if(isAllPermissonGranted()) {
-            if(isLocationEnabled(this)){
+        if (isAllPermissonGranted()) {
+            if (isLocationEnabled(this)) {
                 setUpLocationListener()
-            }else{
+            } else {
                 showGPSNotEnabledDialog(this)
             }
-        }
-        else{
+        } else {
             askForPerm()
 
         }
@@ -76,7 +81,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.selectedItemId = R.id.btm_home
 
 
-
     }
 
     private fun setUpLocationListener() {
@@ -87,8 +91,6 @@ class MainActivity : AppCompatActivity() {
             fastestInterval = 2000 // Set the fastest interval to 2000 milliseconds (2 seconds)
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-//        val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
-//            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
         if (ActivityCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -108,24 +110,26 @@ class MainActivity : AppCompatActivity() {
                     super.onLocationResult(locationResult)
 
                     for (location in locationResult.locations) {
-                        Log.d("LocationData","latitude ${location.latitude}")
-                        Log.d("LocationData","Longitude ${location.longitude}")
+                        Log.d("LocationData", "latitude ${location.latitude}")
+                        Log.d("LocationData", "Longitude ${location.longitude}")
 
                         val currentUser = FirebaseAuth.getInstance().currentUser
                         val mail = currentUser?.email.toString()
 
                         val db = Firebase.firestore
 
-                        val locationData = hashMapOf<String,Any>(
+                        val data = hashMapOf<String, Any>(
                             "lat" to location.latitude.toString(),
-                            "long" to  location.longitude.toString()
+                            "long" to location.longitude.toString(),
+                            "connectionInfo" to networkConnected(),
+                            "batPer" to batteryPercentage()
                         )
 
                         FirebaseFirestore.setLoggingEnabled(true)
 
                         db.collection("User Data")
                             .document(mail)
-                            .update(locationData)
+                            .update(data)
                             .addOnSuccessListener {
 //                                Log.d("location",it)
                                 Toast.makeText(
@@ -144,8 +148,6 @@ class MainActivity : AppCompatActivity() {
                                 ).show()
                             }
                     }
-                    // Few more things we can do here:
-                    // For example: Update the location of user on server
                 }
             },
             Looper.myLooper()
@@ -153,14 +155,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun askForPerm() {
-        ActivityCompat.requestPermissions(this,permissionArray,permissionCode)
+        ActivityCompat.requestPermissions(this, permissionArray, permissionCode)
     }
 
-    private fun inflateFragment(newInstance : Fragment) {
+    private fun inflateFragment(newInstance: Fragment) {
 
         val tranc = supportFragmentManager.beginTransaction()
-        tranc.replace(R.id.container,newInstance)
-        tranc.commit()
+        tranc.replace(R.id.container, newInstance)
+            .addToBackStack(null)
+            .commit()
 
     }
 
@@ -171,31 +174,53 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode == permissionCode){
-            if(isAllPermissonGranted()){
+        if (requestCode == permissionCode) {
+            if (isAllPermissonGranted()) {
                 // TODO:
-            //openCamera()
+                //openCamera()
             }
         }
     }
 
     private fun openCamera() {
         val intent = Intent()
-            intent.action = ACTION_IMAGE_CAPTURE
+        intent.action = ACTION_IMAGE_CAPTURE
         startActivity(intent)
     }
 
+    fun batteryPercentage() : Int{
+        val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+        val batteryPercentage: Int = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+        return batteryPercentage
+
+
+    }
     private fun isAllPermissonGranted(): Boolean {
-        for(items in permissionArray){
-            if(ActivityCompat.checkSelfPermission(
+        for (items in permissionArray) {
+            if (ActivityCompat.checkSelfPermission(
                     this,
                     items
-                ) != PackageManager.PERMISSION_GRANTED){
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return false
             }
         }
         return true
     }
+
+    fun networkConnected(): String {
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+
+        return when {
+            networkInfo == null -> "Offline"
+            networkInfo.type == ConnectivityManager.TYPE_WIFI -> "Wi-Fi"
+            networkInfo.type == ConnectivityManager.TYPE_MOBILE -> "Data"
+            else -> "NA"
+        }
+    }
+
 
     fun isLocationEnabled(context: Context): Boolean {
         val locationManager: LocationManager =

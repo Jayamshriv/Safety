@@ -62,12 +62,12 @@
                 android:textSize="@dimen/dimen_20sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilfirstName"
+                android:id="@+id/tilName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_margin="@dimen/dimen_8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
+                android:hint="Full Name"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -76,13 +76,15 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tillastName"
+                android:id="@+id/tilPhoneNumber"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_margin="@dimen/dimen_8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Name"
+                android:hint="Phone Number"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -112,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                app:passwordToggleEnabled="false"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText

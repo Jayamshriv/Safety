@@ -37,29 +37,33 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
-        if (currentUserUid != null) {
-            val db = FirebaseFirestore.getInstance()
-            val userDocRef = db.collection("users").document(currentUserUid)
-            userDocRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        // Extract the first name from the document data and set it as the text of the profile name TextView
-                        val firstName = document.getString("firstName")
-                        binding.profileName.text = firstName
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("Profile name ", "Error getting user document: ", exception)
-                }
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val email = currentUser?.email.toString()
 
-        }
+        val dbProfile = Firebase.firestore
 
-        binding.cvInviteContacts.setOnClickListener{
+
+        dbProfile.collection("User Data")
+            .document(email)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Extract the first name from the document data and set it as the text of the profile name TextView
+                    val firstName = document.getString("firstName")
+                    binding.profileName.text = firstName
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Profile name ", "Error getting user document: ", exception)
+            }
+
+        binding.cvInviteContacts.setOnClickListener {
             val trancs = parentFragmentManager.beginTransaction()
             trancs.replace(R.id.container, InviteFragment())
-            trancs.commit()
+                .addToBackStack(null)
+                .commit()
         }
+
     }
 
 
