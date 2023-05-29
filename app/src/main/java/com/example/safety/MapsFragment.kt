@@ -69,7 +69,7 @@ class MapsFragment : Fragment() {
 
                     for (doc in it.documents) {
 
-                                                val lat = doc.getString("lat")
+                        val lat = doc.getString("lat")
                         val long = doc.getString("long")
 
                         val location = LatLng(lat!!.toDouble(), long!!.toDouble())
@@ -81,6 +81,7 @@ class MapsFragment : Fragment() {
                                 .icon(BitmapDescriptorFactory
                                     .defaultMarker(hue)
                                     ))
+
                         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
 
                     }
