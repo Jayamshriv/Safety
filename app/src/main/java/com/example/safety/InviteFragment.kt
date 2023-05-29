@@ -54,10 +54,6 @@ class InviteFragment : Fragment() {
 
         }
 
-    private fun showProgressbar() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
     private fun fetchContactsFromDatabase() {
         val dataBase= SafetyDataBase.getDataBase(requireContext())
         dataBase.contactDao().getAllData().observe(viewLifecycleOwner){
@@ -68,6 +64,9 @@ class InviteFragment : Fragment() {
         hideProgressbar()
     }
 
+    private fun showProgressbar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
     private fun hideProgressbar() {
         binding.progressBar.visibility = View.GONE
     }

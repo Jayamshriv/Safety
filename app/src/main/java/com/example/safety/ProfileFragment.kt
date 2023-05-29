@@ -49,8 +49,8 @@ class ProfileFragment : Fragment() {
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     // Extract the first name from the document data and set it as the text of the profile name TextView
-                    val firstName = document.getString("firstName")
-                    binding.profileName.text = firstName
+                    val fullName = document.getString("fullName")
+                    binding.profileName.text = fullName
                 }
             }
             .addOnFailureListener { exception ->
