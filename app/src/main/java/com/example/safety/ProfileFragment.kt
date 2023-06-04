@@ -1,12 +1,17 @@
 package com.example.safety
 
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.text.InputType
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import com.example.safety.databinding.FragmentInviteBinding
 import com.example.safety.databinding.FragmentProfileBinding
@@ -57,11 +62,65 @@ class ProfileFragment : Fragment() {
                 Log.d("Profile name ", "Error getting user document: ", exception)
             }
 
-        binding.cvInviteContacts.setOnClickListener {
+        binding.inviteContacts.setOnClickListener {
             val trancs = parentFragmentManager.beginTransaction()
             trancs.replace(R.id.container, InviteFragment())
                 .addToBackStack(null)
                 .commit()
+        }
+
+        binding.sosNum.setOnClickListener{
+            val alertDialog = AlertDialog.Builder(requireContext())
+            alertDialog.setTitle("Enter Number ")
+
+            val input = EditText(requireContext())
+            input.inputType = InputType.TYPE_CLASS_NUMBER
+            alertDialog.setView(input)
+
+            alertDialog.setPositiveButton("OK",DialogInterface.OnClickListener {
+                    dialog, which ->
+
+                val enteredNumber = input.text.toString()
+
+                SharedPrefFile.init(requireContext())
+                SharedPrefFile.putPhoneNum("PhoneNumberForSOS",enteredNumber)
+
+            })
+
+            alertDialog.setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                    dialog, which ->
+                dialog.cancel()
+            })
+
+            alertDialog.create()
+                .show()
+
+        }
+
+        binding.guardNum.setOnClickListener{
+            val alertDialog = AlertDialog.Builder(requireContext())
+            alertDialog.setTitle("Enter Number ")
+
+            val input = EditText(requireContext())
+            input.inputType = InputType.TYPE_CLASS_NUMBER
+            alertDialog.setView(input)
+
+            alertDialog.setPositiveButton("OK",DialogInterface.OnClickListener {
+                    dialog, which ->
+
+                val enteredNumber = input.text.toString()
+
+                SharedPrefFile.init(requireContext())
+                SharedPrefFile.putPhoneNum("PhoneNumberForGuard",enteredNumber)
+            })
+
+            alertDialog.setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                    dialog, which ->
+                dialog.cancel()
+            })
+
+            alertDialog.create()
+                .show()
         }
 
     }

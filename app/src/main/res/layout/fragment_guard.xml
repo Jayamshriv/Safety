@@ -20,7 +20,7 @@
         android:textSize="24sp" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvFirst"
+        android:id="@+id/cvSOS"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_150dp"
         android:layout_margin="16dp"
@@ -77,8 +77,8 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvSec"
-        android:layout_below="@id/cvFirst"
+        android:id="@+id/cvGuard"
+        android:layout_below="@id/cvSOS"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_150dp"
         android:layout_margin="16dp"

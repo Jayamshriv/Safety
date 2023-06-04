@@ -17,5 +17,6 @@
     <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_64dp">64dp</dimen>
     <dimen name="dimen_300dp">300dp</dimen>
+    <dimen name="dimen_18sp">18sp</dimen>
 
 </resources>

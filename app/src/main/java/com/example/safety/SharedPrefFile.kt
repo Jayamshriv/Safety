@@ -13,10 +13,19 @@ object SharedPrefFile {
     }
 
     fun putLoggedInfo(key: String, value: Boolean){
-        preferences.edit().putBoolean(key,value).commit()
+        preferences.edit().putBoolean(key,value).apply()
     }
 
     fun getLoggedInfo(key : String): Boolean{
         return preferences.getBoolean(key,false)
     }
+
+    fun putPhoneNum(key: String,value: String){
+        preferences.edit().putString(key, value).apply()
+    }
+
+    fun getPhoneNum(key: String): String? {
+        return preferences.getString(key,"0")
+    }
+
 }

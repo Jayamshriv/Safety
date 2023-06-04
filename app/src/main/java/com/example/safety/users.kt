@@ -6,8 +6,8 @@ data class users(
     var phoneNumber: String=" ",
     var email: String = "",
     var password: String = "",
-    var lat : String="",
-    var long : String="",
+    var lat : String="0",
+    var long : String="0",
     var batPer : Int =0,
     var connectionInfo : String = " "
 )

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,7 +22,6 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -87,8 +85,8 @@ class MainActivity : AppCompatActivity() {
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         val locationRequest = LocationRequest.create().apply {
-            interval = 2000 // Set the interval to 2000 milliseconds (2 seconds)
-            fastestInterval = 2000 // Set the fastest interval to 2000 milliseconds (2 seconds)
+            interval =11000 // Set the interval to 2000 milliseconds (2 seconds)
+            fastestInterval = 11000 // Set the fastest interval to 2000 milliseconds (2 seconds)
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
         if (ActivityCompat.checkSelfPermission(
@@ -132,14 +130,14 @@ class MainActivity : AppCompatActivity() {
                             .update(data)
                             .addOnSuccessListener {
 //                                Log.d("location",it)
-                                Toast.makeText(
-                                    baseContext,
-                                    "loaction added",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
+//                                Toast.makeText(
+//                                    baseContext,
+//                                    "loaction added",
+//                                    Toast.LENGTH_SHORT,
+//                                ).show()
                             }
                             .addOnFailureListener {
-                                FirebaseFirestore.setLoggingEnabled(true)
+//                                FirebaseFirestore.setLoggingEnabled(true)
                                 Log.d("TAG", "dataStoring: Failure")
                                 Toast.makeText(
                                     baseContext,
@@ -188,10 +186,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun batteryPercentage() : Int{
+    fun batteryPercentage(): Int {
         val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
-        val batteryPercentage: Int = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
-        return batteryPercentage
+        return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
 
 
     }
