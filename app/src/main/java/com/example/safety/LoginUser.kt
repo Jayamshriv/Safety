@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.room.Database
 import com.example.safety.databinding.ActivityLoginUserBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,9 +22,15 @@ class LoginUser : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityLoginUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this, callback)
 
         auth = FirebaseAuth.getInstance()
 

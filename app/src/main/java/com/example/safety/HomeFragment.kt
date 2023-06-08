@@ -1,11 +1,13 @@
 package com.example.safety
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,7 +75,37 @@ class HomeFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        
+
+
+        binding.mapIcon.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container,MapsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+
+        binding.dotIcon.setOnClickListener {
+            val popMenu = PopupMenu(it.context,it)
+            popMenu.menuInflater.inflate(R.menu.home_menu,popMenu.menu)
+
+            popMenu.setOnMenuItemClickListener {
+
+                when(it.itemId){
+                    R.id.settings ->{
+                        requireActivity().supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.container,ProfileFragment())
+                            .addToBackStack(null)
+                            .commit()
+                        true
+                    }
+                    else -> {false}
+                }
+            }
+            popMenu.show()
+        }
     }
 
 

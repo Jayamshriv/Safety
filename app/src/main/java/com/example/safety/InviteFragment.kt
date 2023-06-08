@@ -19,7 +19,6 @@ class InviteFragment : Fragment() {
     private lateinit var inviteAdapter: inviteAdapter
     private lateinit var binding: FragmentInviteBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -29,6 +28,7 @@ class InviteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentInviteBinding.inflate(inflater,container,false)
+        showProgressbar()
         return binding.root
     }
 
@@ -37,21 +37,19 @@ class InviteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         Log.v("ProfileFragment :"," 1")
         inviteAdapter= inviteAdapter(requireContext(),fetchContacts())
+        binding.rvHomeHorz.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHomeHorz.adapter = inviteAdapter
+
         fetchContactsFromDatabase()
         Log.v("ProfileFragment :"," 2")
-
 
         CoroutineScope(Dispatchers.IO).launch {
             Log.v("ProfileFragment :"," 3")
             insertContactsInDatabase(fetchContacts())
             Log.v("ProfileFragment :"," 4")
         }
-        binding.rvHomeHorz.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvHomeHorz.adapter = inviteAdapter
-
         }
 
     private fun fetchContactsFromDatabase() {
@@ -60,8 +58,8 @@ class InviteFragment : Fragment() {
             contactsFetched.clear()
             contactsFetched.addAll(it)
             inviteAdapter.notifyDataSetChanged()
+            hideProgressbar()
         }
-        hideProgressbar()
     }
 
     private fun showProgressbar() {
@@ -89,8 +87,6 @@ class InviteFragment : Fragment() {
         )
 
         if ((cursor != null) && (cursor.count > 0)) {
-
-            showProgressbar()
 
             while (cursor.moveToNext()) {
                 cursor.getColumnIndex("Name")
@@ -129,6 +125,8 @@ class InviteFragment : Fragment() {
             }
         }
         return listNumber
+
+//        binding.searchView.setOnQueryTextListener(object :)
     }
 
     companion object {

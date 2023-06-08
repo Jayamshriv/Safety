@@ -2,6 +2,7 @@ package com.example.safety
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.InputType
@@ -17,6 +18,7 @@ import com.example.safety.databinding.FragmentInviteBinding
 import com.example.safety.databinding.FragmentProfileBinding
 import com.example.safety.databinding.ItemViewShimmerBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -44,7 +46,6 @@ class ProfileFragment : Fragment() {
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         val email = currentUser?.email.toString()
-
         val dbProfile = Firebase.firestore
 
 
@@ -69,7 +70,7 @@ class ProfileFragment : Fragment() {
                 .commit()
         }
 
-        binding.sosNum.setOnClickListener{
+        binding.sosNum.setOnClickListener {
             val alertDialog = AlertDialog.Builder(requireContext())
             alertDialog.setTitle("Enter Number ")
 
@@ -77,27 +78,27 @@ class ProfileFragment : Fragment() {
             input.inputType = InputType.TYPE_CLASS_NUMBER
             alertDialog.setView(input)
 
-            alertDialog.setPositiveButton("OK",DialogInterface.OnClickListener {
-                    dialog, which ->
+            alertDialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
 
                 val enteredNumber = input.text.toString()
 
                 SharedPrefFile.init(requireContext())
-                SharedPrefFile.putPhoneNum("PhoneNumberForSOS",enteredNumber)
+                SharedPrefFile.putPhoneNum("PhoneNumberForSOS", enteredNumber)
 
             })
 
-            alertDialog.setNegativeButton("Cancel", DialogInterface.OnClickListener {
-                    dialog, which ->
-                dialog.cancel()
-            })
+            alertDialog.setNegativeButton(
+                "Cancel",
+                DialogInterface.OnClickListener { dialog, which ->
+                    dialog.cancel()
+                })
 
             alertDialog.create()
                 .show()
 
         }
 
-        binding.guardNum.setOnClickListener{
+        binding.guardNum.setOnClickListener {
             val alertDialog = AlertDialog.Builder(requireContext())
             alertDialog.setTitle("Enter Number ")
 
@@ -105,25 +106,37 @@ class ProfileFragment : Fragment() {
             input.inputType = InputType.TYPE_CLASS_NUMBER
             alertDialog.setView(input)
 
-            alertDialog.setPositiveButton("OK",DialogInterface.OnClickListener {
-                    dialog, which ->
+            alertDialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
 
                 val enteredNumber = input.text.toString()
 
                 SharedPrefFile.init(requireContext())
-                SharedPrefFile.putPhoneNum("PhoneNumberForGuard",enteredNumber)
+                SharedPrefFile.putPhoneNum("PhoneNumberForGuard", enteredNumber)
             })
 
-            alertDialog.setNegativeButton("Cancel", DialogInterface.OnClickListener {
-                    dialog, which ->
-                dialog.cancel()
-            })
+            alertDialog.setNegativeButton(
+                "Cancel",
+                DialogInterface.OnClickListener { dialog, which ->
+                    dialog.cancel()
+                })
 
             alertDialog.create()
                 .show()
+        }
+
+        binding.signout.setOnClickListener {
+            Firebase.auth.signOut()
+
+            SharedPrefFile.init(requireContext())
+            SharedPrefFile.putLoggedInfo("isUserLoggedIn", false)
+
+            val intent = Intent(requireContext(), LoginUser::class.java)
+            startActivity(intent)
+
         }
 
     }
+
 
 
     companion object {
